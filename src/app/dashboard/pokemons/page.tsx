@@ -1,9 +1,13 @@
-
-
 import { PokemonCard } from "@/pokemons";
 import { PokemonsResponse } from "@/pokemons/interfaces/poemons-response";
 import { SimplePokemon } from "@/pokemons/interfaces/simple-pokemon";
-import { notFound } from "next/navigation";
+
+
+export const metadata = {
+  title: "All Pokemons",
+  description: "Pokemons",
+};
+
 const getPokemons = async (
   limit = 20,
   offset = 0

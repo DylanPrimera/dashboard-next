@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { IoBrowsersOutline, IoCalculator, IoLogoReact } from "react-icons/io5";
+import { IoBrowsersOutline, IoCalculator, IoHeartOutline, IoLogoReact } from "react-icons/io5";
 import { CgPokemon } from "react-icons/cg";
 import { SideBarMenuItem } from "./SideBarMenuItem";
 
@@ -21,6 +21,12 @@ const menuItems = [
     icon: <CgPokemon size={25} />,
     title: "Pokemons",
     subTitle: "Static Generated",
+  },
+  {
+    path: "/dashboard/favorites",
+    icon: <IoHeartOutline size={25} />,
+    title: "Favorites Pokemons",
+    subTitle: "Global State",
   },
 ];
 

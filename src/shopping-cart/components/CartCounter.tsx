@@ -1,28 +1,43 @@
 'use client'
 
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { addOne, initCounter, substractOne } from "@/store/counter/counterSlice";
+import { useEffect } from "react";
 
-export const CartCounter = () => {
-  const [counter, setCounter] = useState(0);
-  const handleCounter = (option: string) => {
-    if (counter === 0 && option === "minus") return;
-    option === "plus"
-      ? setCounter((prevState) => prevState + 1)
-      : setCounter((prevState) => prevState - 1);
-  };
 
+const getCounterFromServer = async (): Promise<number> => {
+  const resp = await fetch('/api/counter')
+  const {count} = await resp.json()
+  return count
+}
+
+export const CartCounter = ({value = 0}) => {
+  const count = useAppSelector(state => state.counter.count)
+  const dispatch = useAppDispatch();
+  
+
+  // useEffect(() => {
+  //   dispatch(initCounter(value))
+  // }, [dispatch, value] )
+
+  useEffect(() => {
+    getCounterFromServer().then((data) => {
+      dispatch(initCounter(data))
+    });
+  }, [dispatch] );
+  
   return (
     <>
-      <span className="text-9xl">{counter}</span>
+      <span className="text-9xl">{count}</span>
       <div className="flex">
         <button
           className="t-black-btn"
-          onClick={() => handleCounter("minus")}
-          disabled={counter === 0}
+          onClick={() => dispatch(substractOne())}
+          disabled={count === 0}
         >
           -1
         </button>
-        <button className="t-black-btn" onClick={() => handleCounter("plus")}>
+        <button className="t-black-btn" onClick={() => dispatch(addOne()) }>
           +1
         </button>
       </div>
