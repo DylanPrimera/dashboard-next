@@ -3,19 +3,23 @@
 import { useAppSelector } from "@/store";
 import { PokemonCard } from "./PokemonCard";
 import { IoHeartOutline } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const FavoritesPokemons = () => {
-  const favoritePokemons = useAppSelector((state) =>
-    Object.values(state.pokemons)
+  const favoritePokemons = useAppSelector((state) => {
+    if(!state.pokemons.favorites) return [];
+    return Object.values(state.pokemons.favorites)
+  }
+    
   );
   const [pokemons, setPokemons] = useState(favoritePokemons)
+  
 
   return (
     <div className="flex gap-10 justify-center flex-wrap">
-      {pokemons.length === 0 ? (
+      {favoritePokemons.length === 0 ? (
         <NoFavorites />
-      ) : pokemons.map((pokemon) => (
+      ) : favoritePokemons.map((pokemon) => (
         <PokemonCard key={pokemon.id} pokemon={pokemon} />
       ))}
     </div>
